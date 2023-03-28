@@ -182,9 +182,10 @@ public class Main {
                 return true;
             }
         };
-        Function<Integer, Integer> function = a -> (int) Math.random();
-        Function<Integer, String> function2 = a -> a.toString();
-        System.out.println(ternaryOperator(predicate, function, function2).apply(1));
+//        Function<Integer, Integer> function = a -> (int) Math.random();
+        Function<Integer, String> function = a -> String.valueOf("За руль пока рано!");
+        Function<Integer, String> function2 = a -> String.valueOf("Садись за руль!");
+        System.out.println(ternaryOperator(predicate, function, function2).apply(17));
     }
     public static <T, U> Function<T, U> ternaryOperator(
             Predicate<? super T> condition,
