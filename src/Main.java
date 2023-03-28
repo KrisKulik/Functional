@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -11,6 +12,7 @@ public class Main {
         task2();
         task3();
         task4();
+        task5();
     }
 
 
@@ -103,6 +105,10 @@ public class Main {
     public static void task3() {
         System.out.println("Задание 3");
 
+//        Реализуйте функциональный интерфейс Function, который принимает на вход вещественное число типа Double,
+//        а возвращает его округленный вариант типа Long.
+//        Реализуйте его в двух вариантах: через анонимный класс и через лямбду.
+
         Double doubleN1 = new Double(3.14d);
         Double doubleN2 = new Double(6.283d);
         Double doubleN3 = new Double(2.718d);
@@ -133,5 +139,60 @@ public class Main {
 
     public static void task4() {
         System.out.println("Задание 4");
+//        Напишите Supplier, который возвращает случайное число из диапазона от 0 до 100.
+//        Реализуйте его в двух вариантах: через анонимный класс и через лямбду
+
+//        Supplier <Integer> randomNum = new Supplier<Integer>() {
+//            @Override
+//            public Integer get() {
+//               int num = (int) (Math.random() * 100);
+//                return num;
+//            }
+//        };
+
+        Supplier<Integer> randomNum = () -> {
+            Random random = new Random();
+            int num = (int) (Math.random() * 100);
+            return num;
+        };
+        System.out.println(randomNum.get());
+    }
+
+    public static void task5() {
+        System.out.println("Задание 5");
+
+//  Теперь попрактикуемся в комбинировании нескольких функций в одну сложную конструкцию.
+//  Для примера построим следующую комбинацию.
+// Дан предикат condition и две функции: ifTrue и ifFalse.
+//Напишите метод ternaryOperator, который из предиката и двух функций построит новую функцию,
+// возвращающую значение функции ifTrue, если предикат выполнен, а в остальных случаях — ifFalse.
+//
+//public static <T, U> Function<T, U> ternaryOperator(
+//   Predicate<? super T> condition,
+//   Function<? super T, ? extends U> ifTrue,
+//   Function<? super T, ? extends U> ifFalse) {
+//   ...
+//}
+        Predicate<Integer> predicate = new Predicate<Integer>() {
+            @Override
+            public boolean test(Integer integer) {
+                if (integer > 18) {
+                    return false;
+                }
+                return true;
+            }
+        };
+        Function<Integer, Integer> function = a -> (int) Math.random();
+        Function<Integer, String> function2 = a -> a.toString();
+        System.out.println(ternaryOperator(predicate, function, function2).apply(1));
+    }
+    public static <T, U> Function<T, U> ternaryOperator(
+            Predicate<? super T> condition,
+            Function<? super T, ? extends U> ifTrue,
+            Function<? super T, ? extends U> ifFalse) {
+        return a -> condition.test(a) ? ifTrue.apply(a) : ifFalse.apply(a);
     }
 }
+
+
+
